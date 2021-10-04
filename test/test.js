@@ -268,6 +268,21 @@ describe("- Testing lambdalocal.js", function () {
                 });
             });
         });
+        describe("* Test esm packages", function () {
+            it.only("should correctly load an ESM function", function (cb) {
+                var lambdalocal = require(lambdalocal_path);
+                lambdalocal.setLogger(winston);
+                lambdalocal.execute({
+                    event: require(path.join(__dirname, "./events/test-event.js")),
+                    lambdaPath: path.join(__dirname, "./functs-esm/test-func-esm.js"),
+                    lambdaHandler: functionName,
+                }).then(() => {
+                    cb();
+                }).catch(error => {
+                    cb(error)
+                });
+            });
+        });
         describe("* Return Error object", function () {
             it("should convert it to correct JSON format", function (cb) {
                 var lambdalocal = require(lambdalocal_path);
